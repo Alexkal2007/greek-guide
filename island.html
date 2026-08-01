@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title">GREEK ISLAND GUIDE — Island</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <a href="main.html" class="logo"><b>GREEK</b>-ISLAND-GUIDE</a>
+    <div class="navlinks">
+      <a href="main.html" data-en="Home" data-el="Αρχική">Home</a>
+      <a href="islands.html" class="active" data-en="Islands" data-el="Νησιά">Islands</a>
+      <a href="services.html" data-en="Services" data-el="Υπηρεσίες">Services</a>
+      <a href="practical.html" data-en="Travel Info" data-el="Χρήσιμες Πληροφορίες">Travel Info</a>
+      <a href="reviews.html" data-en="Reviews" data-el="Εμπειρίες">Reviews</a>
+      <a href="faq.html" data-en="FAQ" data-el="Ερωτήσεις">FAQ</a>
+    </div>
+    <div class="navright">
+      <button class="lang-toggle" onclick="toggleLang()"><span class="lang-label">ΕΛ</span></button>
+      <a href="islands.html" class="navcta" data-en="All islands" data-el="Όλα τα νησιά">All islands</a>
+    </div>
+  </nav>
+</header>
+
+<div class="island-hero">
+  <img id="isl-img" src="" alt="">
+  <div class="scrim"></div>
+  <div class="content">
+    <span class="group" id="isl-group"></span>
+    <h1 id="isl-name"></h1>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="island-body" style="margin-top:36px;">
+    <p id="isl-desc"></p>
+    <p class="photo-credit" id="isl-credit"></p>
+  </div>
+
+  <div class="facts">
+    <div class="fact-card">
+      <span class="label" data-en="Best time to visit" data-el="Καλύτερη εποχή">Best time to visit</span>
+      <p id="isl-best"></p>
+    </div>
+    <div class="fact-card">
+      <span class="label" data-en="Island group" data-el="Σύμπλεγμα νησιών">Island group</span>
+      <p id="isl-group2"></p>
+    </div>
+    <div class="fact-card">
+      <span class="label" data-en="Don't miss" data-el="Μην παραλείψεις">Don't miss</span>
+      <ul id="isl-highlights"></ul>
+    </div>
+  </div>
+
+  <a href="islands.html" class="backlink">← <span data-en="Back to all islands" data-el="Πίσω σε όλα τα νησιά">Back to all islands</span></a>
+
+  <section class="section" style="padding-top:44px;">
+    <div class="section-head">
+      <div>
+        <span class="tag" data-en="Keep exploring" data-el="Συνέχισε την εξερεύνηση">Keep exploring</span>
+        <h2 data-en="Other islands you might like" data-el="Άλλα νησιά που μπορεί να σου αρέσουν">Other islands you might like</h2>
+      </div>
+    </div>
+    <div class="dest-grid" id="related-grid"></div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="logo" style="margin-bottom:14px;"><b>GREEK</b>-ISLAND-GUIDE</div>
+        <p style="color:var(--ink-soft);font-size:14px;max-width:260px;" data-en="A travel guide to the Greek islands and mainland Greece, made by people who love the Aegean." data-el="Ταξιδιωτικός οδηγός για τα ελληνικά νησιά και την ηπειρωτική Ελλάδα, φτιαγμένος από ανθρώπους που αγαπούν το Αιγαίο.">A travel guide to the Greek islands and mainland Greece, made by people who love the Aegean.</p>
+      </div>
+      <div>
+        <h4 data-en="Destinations" data-el="Προορισμοί">Destinations</h4>
+        <a href="islands.html" data-en="All islands" data-el="Όλα τα νησιά">All islands</a>
+        <a href="services.html" data-en="Services" data-el="Υπηρεσίες">Services</a>
+        <a href="practical.html" data-en="Travel info" data-el="Χρήσιμες πληροφορίες">Travel info</a>
+      </div>
+      <div>
+        <h4 data-en="More" data-el="Περισσότερα">More</h4>
+        <a href="reviews.html" data-en="Traveller reviews" data-el="Εμπειρίες ταξιδιωτών">Traveller reviews</a>
+        <a href="faq.html" data-en="FAQ" data-el="Συχνές ερωτήσεις">FAQ</a>
+        <a href="main.html" data-en="Home" data-el="Αρχική">Home</a>
+      </div>
+      <div>
+        <h4 data-en="Language" data-el="Γλώσσα">Language</h4>
+        <a href="#" onclick="setLang('en');return false;">English</a>
+        <a href="#" onclick="setLang('el');return false;">Ελληνικά</a>
+      </div>
+    </div>
+    <div class="credits" id="isl-credit-footer"></div>
+    <div class="foot-bottom">
+      <span>© 2026 GREEK-ISLAND-GUIDE</span>
+      <span data-en="Made for travellers who love the sea" data-el="Σχεδιασμένο για ταξιδιώτες που αγαπούν τη θάλασσα">Made for travellers who love the sea</span>
+    </div>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script src="i18n.js"></script>
+<script>
+  var params = new URLSearchParams(window.location.search);
+  var slug = params.get('id') || 'santorini';
+  var island = ISLANDS.find(function(x){ return x.slug === slug; }) || ISLANDS[0];
+
+  function renderIsland(){
+    var lang = getLang();
+    document.getElementById('page-title').textContent = island.name[lang] + ' — GREEK ISLAND GUIDE';
+    document.getElementById('isl-img').src = island.img;
+    document.getElementById('isl-img').alt = island.name[lang];
+    document.getElementById('isl-group').textContent = island.groupName[lang];
+    document.getElementById('isl-group2').textContent = island.groupName[lang];
+    document.getElementById('isl-name').textContent = island.name[lang];
+    document.getElementById('isl-desc').textContent = island.desc[lang];
+    document.getElementById('isl-best').textContent = island.best[lang];
+
+    var creditLabel = lang === 'en' ? 'Photo: ' : 'Φωτογραφία: ';
+    document.getElementById('isl-credit').textContent = creditLabel + island.credit;
+    var footerCreditLabel = lang === 'en'
+      ? 'Photo credit for this page:'
+      : 'Πηγή φωτογραφίας για αυτή τη σελίδα:';
+    document.getElementById('isl-credit-footer').innerHTML =
+      '<b>' + footerCreditLabel + '</b> ' + island.name[lang] + ' — ' + island.credit + '.';
+
+    var hlist = document.getElementById('isl-highlights');
+    hlist.innerHTML = '';
+    island.highlights[lang].forEach(function(h){
+      var li = document.createElement('li');
+      li.textContent = h;
+      hlist.appendChild(li);
+    });
+
+    var related = document.getElementById('related-grid');
+    related.innerHTML = '';
+    ISLANDS.filter(function(x){ return x.slug !== island.slug; })
+      .slice(0, 3)
+      .forEach(function(isl){
+        var card = document.createElement('a');
+        card.href = 'island.html?id=' + isl.slug;
+        card.className = 'dest-card';
+        card.innerHTML =
+          '<img src="'+isl.img+'" alt="'+isl.name[lang]+'">' +
+          '<div class="scrim"></div>' +
+          '<div class="content">' +
+            '<span class="group">'+isl.groupName[lang]+'</span>' +
+            '<h3>'+isl.name[lang]+'</h3>' +
+            '<div class="meta">'+isl.tagline[lang]+'</div>' +
+          '</div>';
+        related.appendChild(card);
+      });
+  }
+
+  document.addEventListener('DOMContentLoaded', renderIsland);
+  document.addEventListener('langchange', renderIsland);
+</script>
+</body>
+</html>
